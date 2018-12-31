@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+
 /**
  * Created by SONU on 21/03/16.
  */
@@ -141,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
             emailText.setText(mEmail);
             Picasso.get().load(mProfilePic)
                          .resize(150, 150)
+                         .transform(new CropCircleTransformation())
                          .into(profileImage);
         }
     }
