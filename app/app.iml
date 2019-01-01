@@ -172,5 +172,6 @@
     <orderEntry type="library" name="com.android.support:transition-26.1.0" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-measurement-base-16.0.5" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-iid-interop-16.0.1" level="project" />
+    <orderEntry type="library" name="com.android.support:cardview-v7-26.1.0" level="project" />
   </component>
 </module>

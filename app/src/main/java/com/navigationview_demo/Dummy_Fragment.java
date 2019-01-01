@@ -1,11 +1,13 @@
 package com.navigationview_demo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ public class Dummy_Fragment extends Fragment {
     private List<String> quoteList = new ArrayList<String>();
     private TextView quoteView;
 
+    private Button libraryButton;
+
     public Dummy_Fragment() {
     }
 
@@ -31,6 +35,15 @@ public class Dummy_Fragment extends Fragment {
         quoteView = view.findViewById(R.id.quoteView);
 
         displayRandomQuote();
+
+        libraryButton = view.findViewById(R.id.browseLibrary);
+        libraryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), LibraryActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
 
         return view;
     }

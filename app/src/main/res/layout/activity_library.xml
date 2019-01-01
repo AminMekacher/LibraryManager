@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutLibrary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LibraryActivity" >
+
+    <TextView
+        android:id="@+id/browserText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Browser"
+        android:textSize="23sp"
+        android:textStyle="bold" />
+
+    <SearchView
+        android:id="@+id/librarySearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:queryHint="Title, author, etc..."
+        android:layout_below="@id/browserText">
+    </SearchView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleLibrary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/librarySearch">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</RelativeLayout>
