@@ -26,6 +26,7 @@ public class LibraryActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference myRef;
     List<BookClass> bookClassList;
+    List<BookClass> bookClassListCopy;
     RecyclerView recycle;
 
     RecyclerAdapter recyclerAdapter;
@@ -65,11 +66,9 @@ public class LibraryActivity extends AppCompatActivity {
                     bookClassList.add(fire);
                 }
 
-                recyclerAdapter = new RecyclerAdapter(bookClassList, LibraryActivity.this);
-                RecyclerView.LayoutManager recyclerManager = new GridLayoutManager(LibraryActivity.this, 1);
-                recycle.setLayoutManager(recyclerManager);
-                recycle.setItemAnimator(new DefaultItemAnimator());
-                recycle.setAdapter(recyclerAdapter);
+                bookClassListCopy = new ArrayList<BookClass>(bookClassList);
+
+                setRecyclerAdapter();
             }
 
             @Override
@@ -84,18 +83,26 @@ public class LibraryActivity extends AppCompatActivity {
         searchLibrary.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                setRecyclerAdapter();
                 recyclerAdapter.filter(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                recyclerAdapter.filter(newText);
+                //recyclerAdapter.filter(newText);
                 return true;
             }
         });
 
-        //int size = bookClassList.size();
+    }
 
+    public void setRecyclerAdapter() {
+
+        recyclerAdapter = new RecyclerAdapter(bookClassListCopy, LibraryActivity.this);
+        RecyclerView.LayoutManager recyclerManager = new GridLayoutManager(LibraryActivity.this, 1);
+        recycle.setLayoutManager(recyclerManager);
+        recycle.setItemAnimator(new DefaultItemAnimator());
+        recycle.setAdapter(recyclerAdapter);
     }
 }

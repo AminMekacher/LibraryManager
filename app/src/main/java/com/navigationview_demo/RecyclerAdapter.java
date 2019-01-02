@@ -2,6 +2,7 @@ package com.navigationview_demo;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHode
 
     public RecyclerAdapter(List<BookClass> bookList, Context context) {
         this.bookList = bookList;
-        this.bookListCopy = bookList;
+        this.bookListCopy = new ArrayList<>(bookList);
         this.context = context;
     }
 
@@ -71,6 +72,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHode
 
     public void filter (String queryText) {
 
+        if (bookList.isEmpty()) {
+            Log.e("Book", "No books!");
+        }
+
+        if (bookListCopy.isEmpty()) {
+            Log.e("BookCopy", "No books!");
+        }
+
         bookList.clear();
 
         if (queryText.isEmpty()) {
@@ -83,6 +92,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHode
                 }
             }
         }
+
+        notifyDataSetChanged();
 
     }
 

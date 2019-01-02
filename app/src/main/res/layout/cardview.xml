@@ -38,8 +38,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/book_cover"
-                android:layout_below="@+id/book_title"
-                />
+                android:layout_below="@+id/book_title" />
+
+            <TextView
+                android:id="@+id/detailsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/book_author"
+                android:layout_toRightOf="@id/book_cover"
+                android:text="Details"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginTop="20dp"
+                android:clickable="true"/>
+
+            <TextView
+                android:id="@+id/borrowButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/book_author"
+                android:layout_toRightOf="@id/detailsButton"
+                android:text="Borrow Book"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:clickable="true"/>
 
         </RelativeLayout>
 
