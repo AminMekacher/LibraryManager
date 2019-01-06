@@ -65,6 +65,26 @@
                 android:layout_marginTop="20dp"
                 android:clickable="true"/>
 
+            <TextView
+                android:id="@+id/borrowedState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detailsButton"
+                android:layout_toRightOf="@id/book_cover"
+                android:visibility="invisible"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginTop="20dp"/>
+
+            <TextView
+                android:id="@+id/dueDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/borrowedState"
+                android:layout_toRightOf="@id/book_cover"
+                android:visibility="invisible"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginTop="10dp"/>
+
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

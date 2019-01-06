@@ -56,17 +56,21 @@ public class LibraryActivity extends AppCompatActivity {
 
                     String author = value.getAuthor();
                     String title = value.getTitle();
-                    Uri cover = value.getCoverUri();
-                    String test = dataSnapshot1.child("cover").getValue(String.class);
+                    String borrowedState = value.getBorrowed();
+                    String dueDate = value.getDueDate();
+
+                    String coverURL = dataSnapshot1.child("cover").getValue(String.class);
 
                     fire.setAuthor(author);
                     fire.setTitle(title);
-                    fire.setCoverUri(Uri.parse(test));
+                    fire.setCoverUri(Uri.parse(coverURL));
+                    fire.setBorrowed(borrowedState);
+                    fire.setDueDate(dueDate);
 
                     bookClassList.add(fire);
                 }
 
-                bookClassListCopy = new ArrayList<BookClass>(bookClassList);
+                bookClassListCopy = new ArrayList<>(bookClassList);
 
                 setRecyclerAdapter();
             }

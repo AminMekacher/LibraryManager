@@ -11,6 +11,8 @@ public class BookClass {
     public String title;
     public String author;
     public Uri coverUri;
+    public String borrowed;
+    public String dueDate;
 
     public String getTitle() {
         return title;
@@ -24,6 +26,14 @@ public class BookClass {
         return coverUri;
     }
 
+    public String getBorrowed() {
+        return borrowed;
+    }
+
+    public String getDueDate() {
+        return dueDate;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -34,5 +44,13 @@ public class BookClass {
 
     public void setCoverUri(Uri coverUri) {
         this.coverUri = coverUri;
+    }
+
+    public void setBorrowed(String borrowed) {
+        this.borrowed = borrowed;
+    }
+
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
     }
 }
