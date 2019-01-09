@@ -87,6 +87,7 @@ public class UserBooksActivity extends AppCompatActivity {
                     if (borrowedState.equals(mUsername)) {
                         bookClassList.add(fire);
                         dueDateList.add(dueDate);
+                        bookTitleList.add(title);
                     }
                 }
 
