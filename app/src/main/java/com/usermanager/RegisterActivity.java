@@ -1,4 +1,4 @@
-package com.navigationview_demo;
+package com.usermanager;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -17,8 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.usermanager_demo.R;
 
 public class RegisterActivity extends AppCompatActivity {
 

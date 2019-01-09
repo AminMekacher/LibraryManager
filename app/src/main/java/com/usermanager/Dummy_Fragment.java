@@ -1,4 +1,4 @@
-package com.navigationview_demo;
+package com.usermanager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.usermanager_demo.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ public class Dummy_Fragment extends Fragment {
     private TextView quoteView;
 
     private Button libraryButton;
+    private Button checkBooksButton;
 
     public Dummy_Fragment() {
     }
@@ -41,6 +45,15 @@ public class Dummy_Fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), LibraryActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        checkBooksButton = view.findViewById(R.id.checkBooks);
+        checkBooksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), UserBooksActivity.class);
                 getActivity().startActivity(intent);
             }
         });

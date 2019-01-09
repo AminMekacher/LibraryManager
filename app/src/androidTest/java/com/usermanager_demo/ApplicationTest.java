@@ -1,4 +1,4 @@
-package com.navigationview_demo;
+package com.usermanager_demo;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

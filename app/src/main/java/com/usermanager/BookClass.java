@@ -1,4 +1,4 @@
-package com.navigationview_demo;
+package com.usermanager;
 
 import android.net.Uri;
 

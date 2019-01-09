@@ -4,41 +4,66 @@
     android:id="@+id/layoutLibrary"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LibraryActivity" >
-
-    <TextView
-        android:id="@+id/browserText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="Browser"
-        android:textSize="23sp"
-        android:textStyle="bold" />
+    tools:context="com.usermanager.LibraryActivity" >
 
     <SearchView
         android:id="@+id/librarySearch"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:queryHint="Title, author, etc..."
-        android:layout_below="@id/browserText">
-    </SearchView>
+        android:layout_marginBottom="15dp"
+        android:layout_centerHorizontal="true"/>
 
-    <ImageButton
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:background="#CCCCCC"
+        android:layout_below="@id/librarySearch"/>
+
+    <ImageView
         android:id="@+id/scanBarcode"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/view1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:src="@drawable/barcode"
+        android:clickable="true" />
+
+    <TextView
+        android:id="@+id/barcodeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/librarySearch"
+        android:layout_below="@id/scanBarcode"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:src="@drawable/barcode" />
+        android:text="Scan Barcode"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:background="#CCCCCC"
+        android:layout_below="@id/barcodeText"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleLibrary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/scanBarcode">
+        android:layout_below="@id/view2"
+        android:layout_marginBottom="15dp">
 
     </android.support.v7.widget.RecyclerView>
 

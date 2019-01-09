@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NavigationView Demo</string>
+    <string name="app_name">User Manager</string>
 
     <string name="default_navigation_view">Default Navigation View</string>
     <string name="custom_navigation_view">Custom Navigation View</string>

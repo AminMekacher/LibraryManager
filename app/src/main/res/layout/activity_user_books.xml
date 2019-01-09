@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutLibrary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.usermanager.UserBooksActivity" >
+
+    <ImageView
+        android:id="@+id/calendarImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/calendar"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:onClick="displayCalendar"/>
+
+    <TextView
+        android:id="@+id/calendarText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
+        android:text="Calendar View"
+        android:textStyle="bold"
+        android:layout_below="@id/calendarImage"
+        android:layout_centerHorizontal="true" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:background="#CCCCCC"
+        android:layout_below="@id/calendarText"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleLibrary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view2"
+        android:layout_marginTop="15dp">
+
+    </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

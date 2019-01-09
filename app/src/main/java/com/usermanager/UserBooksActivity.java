@@ -1,4 +1,4 @@
-package com.navigationview_demo;
+package com.usermanager;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,44 +8,52 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.SearchView;
 import android.util.Log;
+import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.navigationview_demo.R;
+import com.usermanager_demo.R;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibraryActivity extends AppCompatActivity {
+public class UserBooksActivity extends AppCompatActivity {
 
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference myRef;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference myRef;
     static List<BookClass> bookClassList;
-    static List<BookClass> bookClassListCopy;
-    RecyclerView recycle;
 
-    RecyclerAdapter recyclerAdapter;
+    private RecyclerView recycle;
+    private RecyclerAdapter recyclerAdapter;
 
-    SearchView searchLibrary;
-    ImageButton scanBarcode;
-    boolean barcodeFilter;
+    private FirebaseAuth mAuth;
+    private FirebaseUser firebaseUser;
+    private String mUsername;
+
+    ArrayList<String> dueDateList;
+    ArrayList<String> bookTitleList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_library);
+        setContentView(R.layout.activity_user_books);
+
+        mAuth = FirebaseAuth.getInstance();
+        firebaseUser = mAuth.getCurrentUser();
+        mUsername = firebaseUser.getDisplayName();
 
         recycle = findViewById(R.id.recycleLibrary);
         firebaseDatabase = FirebaseDatabase.getInstance();
         myRef = firebaseDatabase.getReference();
+
+        dueDateList = new ArrayList<>();
+        bookTitleList = new ArrayList<>();
 
         myRef.child("Books").addValueEventListener(new ValueEventListener() {
 
@@ -74,10 +82,13 @@ public class LibraryActivity extends AppCompatActivity {
                     fire.setDueDate(dueDate);
                     fire.setBarcode(barcode);
 
-                    bookClassList.add(fire);
-                }
+                    // Add to the database only if the book is borrowed by the user
 
-                bookClassListCopy = new ArrayList<>(bookClassList);
+                    if (borrowedState.equals(mUsername)) {
+                        bookClassList.add(fire);
+                        dueDateList.add(dueDate);
+                    }
+                }
 
                 if (getIntent().getBooleanExtra("ScannerDone", false) != true) {
                     setRecyclerAdapter();
@@ -91,55 +102,21 @@ public class LibraryActivity extends AppCompatActivity {
 
             }
         });
-
-        searchLibrary = findViewById(R.id.librarySearch);
-        searchLibrary.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                int i = bookClassList.size();
-                int j = bookClassListCopy.size();
-
-                bookClassList = new ArrayList<>(bookClassListCopy);
-                setRecyclerAdapter();
-                barcodeFilter = false;
-                recyclerAdapter.filter(query, barcodeFilter);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                //recyclerAdapter.filter(newText);
-                return true;
-            }
-        });
-
-        scanBarcode = findViewById(R.id.scanBarcode);
-        scanBarcode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), BarcodeScannerActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Intent barcodeIntent = getIntent();
-        String barcodeSearch = barcodeIntent.getStringExtra("Barcode");
-
-        if (barcodeSearch != null) {
-            bookClassList = new ArrayList<>(bookClassListCopy);
-            setRecyclerAdapter();
-            barcodeFilter = true;
-            recyclerAdapter.filter(barcodeSearch, barcodeFilter);
-        }
-
     }
 
     public void setRecyclerAdapter() {
 
-        recyclerAdapter = new RecyclerAdapter(bookClassList, LibraryActivity.this);
-        RecyclerView.LayoutManager recyclerManager = new GridLayoutManager(LibraryActivity.this, 1);
+        recyclerAdapter = new RecyclerAdapter(bookClassList, UserBooksActivity.this);
+        RecyclerView.LayoutManager recyclerManager = new GridLayoutManager(UserBooksActivity.this, 1);
         recycle.setLayoutManager(recyclerManager);
         recycle.setItemAnimator(new DefaultItemAnimator());
         recycle.setAdapter(recyclerAdapter);
+    }
+
+    public void displayCalendar(View view) {
+        Intent intent = new Intent(this, CalendarActivity.class);
+        intent.putExtra("DueDates", dueDateList);
+        intent.putExtra("BookList", bookTitleList);
+        startActivity(intent);
     }
 }
