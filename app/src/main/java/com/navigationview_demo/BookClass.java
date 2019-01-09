@@ -13,6 +13,7 @@ public class BookClass {
     public Uri coverUri;
     public String borrowed;
     public String dueDate;
+    public long barcode;
 
     public String getTitle() {
         return title;
@@ -34,6 +35,10 @@ public class BookClass {
         return dueDate;
     }
 
+    public long getBarcode() {
+        return barcode;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -52,5 +57,9 @@ public class BookClass {
 
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public void setBarcode(long barcode) {
+        this.barcode = barcode;
     }
 }

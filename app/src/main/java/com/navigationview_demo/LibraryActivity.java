@@ -1,5 +1,6 @@
 package com.navigationview_demo;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.util.Log;
 
@@ -25,13 +28,15 @@ public class LibraryActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference myRef;
-    List<BookClass> bookClassList;
-    List<BookClass> bookClassListCopy;
+    static List<BookClass> bookClassList;
+    static List<BookClass> bookClassListCopy;
     RecyclerView recycle;
 
     RecyclerAdapter recyclerAdapter;
 
     SearchView searchLibrary;
+    ImageButton scanBarcode;
+    boolean barcodeFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,7 @@ public class LibraryActivity extends AppCompatActivity {
                     String title = value.getTitle();
                     String borrowedState = value.getBorrowed();
                     String dueDate = value.getDueDate();
+                    long barcode = value.getBarcode();
 
                     String coverURL = dataSnapshot1.child("cover").getValue(String.class);
 
@@ -66,13 +72,16 @@ public class LibraryActivity extends AppCompatActivity {
                     fire.setCoverUri(Uri.parse(coverURL));
                     fire.setBorrowed(borrowedState);
                     fire.setDueDate(dueDate);
+                    fire.setBarcode(barcode);
 
                     bookClassList.add(fire);
                 }
 
                 bookClassListCopy = new ArrayList<>(bookClassList);
 
-                setRecyclerAdapter();
+                if (getIntent().getBooleanExtra("ScannerDone", false) != true) {
+                    setRecyclerAdapter();
+                }
             }
 
             @Override
@@ -87,8 +96,13 @@ public class LibraryActivity extends AppCompatActivity {
         searchLibrary.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                int i = bookClassList.size();
+                int j = bookClassListCopy.size();
+
+                bookClassList = new ArrayList<>(bookClassListCopy);
                 setRecyclerAdapter();
-                recyclerAdapter.filter(query);
+                barcodeFilter = false;
+                recyclerAdapter.filter(query, barcodeFilter);
                 return true;
             }
 
@@ -99,11 +113,30 @@ public class LibraryActivity extends AppCompatActivity {
             }
         });
 
+        scanBarcode = findViewById(R.id.scanBarcode);
+        scanBarcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), BarcodeScannerActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Intent barcodeIntent = getIntent();
+        String barcodeSearch = barcodeIntent.getStringExtra("Barcode");
+
+        if (barcodeSearch != null) {
+            bookClassList = new ArrayList<>(bookClassListCopy);
+            setRecyclerAdapter();
+            barcodeFilter = true;
+            recyclerAdapter.filter(barcodeSearch, barcodeFilter);
+        }
+
     }
 
     public void setRecyclerAdapter() {
 
-        recyclerAdapter = new RecyclerAdapter(bookClassListCopy, LibraryActivity.this);
+        recyclerAdapter = new RecyclerAdapter(bookClassList, LibraryActivity.this);
         RecyclerView.LayoutManager recyclerManager = new GridLayoutManager(LibraryActivity.this, 1);
         recycle.setLayoutManager(recyclerManager);
         recycle.setItemAnimator(new DefaultItemAnimator());

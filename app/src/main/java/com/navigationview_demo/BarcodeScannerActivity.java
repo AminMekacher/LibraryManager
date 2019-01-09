@@ -122,7 +122,14 @@ public class BarcodeScannerActivity extends AppCompatActivity implements ZXingSc
         Log.d("Barcode", result);
         Log.d("Barcode", rawResult.getBarcodeFormat().toString());
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        Toast.makeText(getApplicationContext(), "Scanning successful!", Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(this, LibraryActivity.class);
+        intent.putExtra("Barcode", result);
+        intent.putExtra("ScannerDone", true);
+        startActivity(intent);
+
+        /**AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Scan Result");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -141,6 +148,6 @@ public class BarcodeScannerActivity extends AppCompatActivity implements ZXingSc
 
         builder.setMessage(rawResult.getText());
         AlertDialog alert1 = builder.create();
-        alert1.show();
+        alert1.show();**/
     }
 }

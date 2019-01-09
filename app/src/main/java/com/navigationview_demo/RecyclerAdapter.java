@@ -41,7 +41,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHoder> {
 
     List<BookClass> bookList = new ArrayList<>();
-    List<BookClass> bookListCopy = new ArrayList<>();
+    static List<BookClass> bookListCopy = new ArrayList<>();
 
     Context context;
 
@@ -251,30 +251,38 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHode
         return arr;
     }
 
-    public void filter (String queryText) {
+    public void filter (String queryText, boolean barcodeFilter) {
 
-        if (bookList.isEmpty()) {
-            Log.e("Book", "No books!");
-        }
-
-        if (bookListCopy.isEmpty()) {
-            Log.e("BookCopy", "No books!");
-        }
+        int i = bookListCopy.size();
 
         bookList.clear();
 
         if (queryText.isEmpty()) {
             bookList.addAll(bookListCopy);
         } else {
-            queryText = queryText.toLowerCase();
-            for (BookClass bookClass : bookListCopy) {
-                if (bookClass.getTitle().toLowerCase().contains(queryText)) {
-                    bookList.add(bookClass);
+
+            if (!barcodeFilter) {
+                Log.d("t", "Not barcode here");
+                queryText = queryText.toLowerCase();
+                for (BookClass bookClass : bookListCopy) {
+                    if (bookClass.getTitle().toLowerCase().contains(queryText) || bookClass.getAuthor().toLowerCase().contains(queryText)) {
+                        bookList.add(bookClass);
+                    }
                 }
+            } else {
+                Log.d("Tag,", "Barcode here");
+                for (BookClass bookClass : bookListCopy) {
+                    if (Long.toString(bookClass.getBarcode()).contains(queryText)) {
+                        bookList.add(bookClass);
+                    }
+                }
+
             }
         }
 
         notifyDataSetChanged();
+
+        int ii = bookListCopy.size();
 
     }
 
