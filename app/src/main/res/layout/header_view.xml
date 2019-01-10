@@ -28,7 +28,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="Dr. Droid"
             android:textColor="@android:color/black"
             android:textSize="15sp" />
 
@@ -37,7 +36,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="androhub.com"
             android:textColor="@android:color/black"
             android:textSize="13sp" />
     </LinearLayout>

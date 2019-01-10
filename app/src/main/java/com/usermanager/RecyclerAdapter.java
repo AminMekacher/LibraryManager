@@ -78,7 +78,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHode
 
         if(!myList.getBorrowed().toString().equals("False")) {
             Log.e("TAG", "Borrowed :" + myList.getBorrowed());
-            holder.borrowButton.setText("Unavailable");
+            holder.borrowButton.setText("Join Waiting List");
             holder.borrowButton.setTextColor(holder.itemView.getResources().getColor(R.color.redWarning));
         }
 

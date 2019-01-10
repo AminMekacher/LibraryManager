@@ -76,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
     /*  Init all views  */
     private void initViews() {
-        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.slider_menu);
+        toolbar = findViewById(R.id.main_toolbar);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.slider_menu);
 
         if (firebaseUser == null) { // user is not connected yet
             navigationView.getMenu().clear();

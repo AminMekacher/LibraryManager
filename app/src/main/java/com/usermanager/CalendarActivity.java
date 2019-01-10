@@ -54,7 +54,7 @@ public class CalendarActivity extends AppCompatActivity {
         t.replace(R.id.calendar1, caldroidFragment);
         t.commit();
 
-        colorDrawable = new ColorDrawable(ContextCompat.getColor(this, R.color.redCalendar));
+        colorDrawable = new ColorDrawable(ContextCompat.getColor(this, R.color.greenCalendar));
 
         dueDateString = getIntent().getExtras().getStringArrayList("DueDates");
         bookTitleList = getIntent().getExtras().getStringArrayList("BookList");
@@ -104,6 +104,8 @@ public class CalendarActivity extends AppCompatActivity {
                         dueBookText.setText("Books due for the " + dateSelected + " : \n" + bookListView);
                         dueBookText.setVisibility(View.VISIBLE);
                     }
+                } else {
+                    dueBookText.setVisibility(View.INVISIBLE);
                 }
             }
         };

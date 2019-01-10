@@ -1,8 +1,12 @@
 package com.usermanager;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,7 +24,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.usermanager_demo.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class UserBooksActivity extends AppCompatActivity {
@@ -36,8 +44,16 @@ public class UserBooksActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private String mUsername;
 
+    private boolean notificationToSend;
+
+    private static Date currentTime = Calendar.getInstance().getTime();
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private static FirebaseNotification firebaseNotification = new FirebaseNotification();
+
     ArrayList<String> dueDateList;
     ArrayList<String> bookTitleList;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,11 +104,25 @@ public class UserBooksActivity extends AppCompatActivity {
                         bookClassList.add(fire);
                         dueDateList.add(dueDate);
                         bookTitleList.add(title);
+
+                        try {
+                            Date bookDate = dateFormat.parse(dueDate);
+                            if (bookDate.before(currentTime)) {
+                                notificationToSend = true;
+                                //sendNotification();
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+
                     }
                 }
 
-                if (getIntent().getBooleanExtra("ScannerDone", false) != true) {
-                    setRecyclerAdapter();
+                setRecyclerAdapter();
+
+                if (notificationToSend == true) {
+                    sendNotification();
                 }
             }
 
@@ -103,6 +133,27 @@ public class UserBooksActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void sendNotification() {
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+
+        Intent intent = new Intent(this, CalendarActivity.class);
+        intent.putExtra("DueDates", dueDateList);
+        intent.putExtra("BookList", bookTitleList);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder.setContentIntent(pendingIntent);
+        mBuilder.setSmallIcon(R.drawable.agenda);
+        mBuilder.setContentTitle("User Manager");
+        mBuilder.setContentText("Don't forget to bring some books back to the library!");
+
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        mNotificationManager.notify(001, mBuilder.build());
     }
 
     public void setRecyclerAdapter() {
