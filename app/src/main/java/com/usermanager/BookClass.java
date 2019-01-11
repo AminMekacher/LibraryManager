@@ -2,6 +2,8 @@ package com.usermanager;
 
 import android.net.Uri;
 
+import java.util.ArrayList;
+
 /**
  * Created by aminmekacher on 01.01.19.
  */
@@ -62,4 +64,6 @@ public class BookClass {
     public void setBarcode(long barcode) {
         this.barcode = barcode;
     }
+
+
 }

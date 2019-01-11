@@ -53,6 +53,8 @@ public class UserBooksActivity extends AppCompatActivity {
     ArrayList<String> dueDateList;
     ArrayList<String> bookTitleList;
 
+    long MILLIS_PER_DAY = 24 * 60 * 60 * 1000;
+
 
 
     @Override
@@ -107,9 +109,12 @@ public class UserBooksActivity extends AppCompatActivity {
 
                         try {
                             Date bookDate = dateFormat.parse(dueDate);
-                            if (bookDate.before(currentTime)) {
+                            long begin = currentTime.getTime();
+                            long end = bookDate.getTime(); // 2nd date want to compare
+                            long diff = (end - begin) / (MILLIS_PER_DAY);
+
+                            if (diff <= 2) {
                                 notificationToSend = true;
-                                //sendNotification();
                             }
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -148,7 +153,7 @@ public class UserBooksActivity extends AppCompatActivity {
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setSmallIcon(R.drawable.agenda);
         mBuilder.setContentTitle("User Manager");
-        mBuilder.setContentText("Don't forget to bring some books back to the library!");
+        mBuilder.setContentText("Some of your borrowed books are almost due!");
 
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

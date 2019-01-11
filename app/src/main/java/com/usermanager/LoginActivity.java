@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,15 +23,16 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailText, passwordText;
     private Button loginButton;
     private String emailHolder, passwordHolder;
+    private TextView registerText, forgottenPassword;
 
-    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         emailText = findViewById(R.id.email);
         passwordText = findViewById(R.id.password);
@@ -40,18 +42,16 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 checkUserCredentials();
-
-                //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                //startActivity(intent);
             }
         });
+
+        registerText = findViewById(R.id.registerText);
+        forgottenPassword = findViewById(R.id.passwordForgotten);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null)
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
     }
 
     private void checkUserCredentials() {
@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Log.e("Login", "Login for " + emailHolder + "with password " + passwordHolder);
 
-        firebaseAuth.signInWithEmailAndPassword(emailHolder, passwordHolder)
+        mAuth.signInWithEmailAndPassword(emailHolder, passwordHolder)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -83,8 +83,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void registerCallback(View view) {
+
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 
     public void passwordRecover(View view) {
+
+        Intent intent = new Intent(getApplicationContext(), ForgottenPassword.class);
+        startActivity(intent);
     }
 }

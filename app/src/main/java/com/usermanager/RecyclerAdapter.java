@@ -78,8 +78,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHode
 
         if(!myList.getBorrowed().toString().equals("False")) {
             Log.e("TAG", "Borrowed :" + myList.getBorrowed());
-            holder.borrowButton.setText("Join Waiting List");
-            holder.borrowButton.setTextColor(holder.itemView.getResources().getColor(R.color.redWarning));
+
+            if (myList.getBorrowed().toString().equals(mUsername)) {
+                holder.borrowButton.setText("You currently own this book");
+                holder.borrowButton.setTextColor(holder.itemView.getResources().getColor(R.color.greenText));
+            } else {
+                holder.borrowButton.setText("Join Waiting List");
+                holder.borrowButton.setTextColor(holder.itemView.getResources().getColor(R.color.redWarning));
+            }
         }
 
         holder.detailsButton.setOnClickListener(new View.OnClickListener() {
@@ -217,9 +223,54 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHode
                         AlertDialog alert = builder.create();
                         alert.show();
 
-                    } else { // The user is the one currently owning the book
+                    } else { // The user is the one currently owning the book: return it?
 
-                        Toast.makeText(holder.itemView.getContext(), "You already own the book!", Toast.LENGTH_LONG).show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(holder.itemView.getContext());
+                        builder.setTitle("Return Book");
+                        builder.setMessage("Do you want to return this book to the library?");
+                        builder.setIcon(holder.itemView.getResources().getDrawable(R.drawable.agenda));
+                        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Query query = mDatabase.orderByChild("author").equalTo(holder.author.getText().toString());
+                                query.addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                        dataSnapshot.child("borrowed").getRef().setValue("False");
+                                        dataSnapshot.child("dueDate").getRef().setValue("empty");
+                                    }
+
+                                    @Override
+                                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        });
+                        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
 
                     }
                 }

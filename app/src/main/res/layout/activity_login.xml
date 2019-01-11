@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="false"
-    tools:context="com.usermanager_demo.com.usermanager.LoginActivity">
+    tools:context="com.usermanager.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

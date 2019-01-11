@@ -47,7 +47,6 @@ public class LibraryActivity extends AppCompatActivity {
     ImageView scanBarcode;
     boolean barcodeFilter;
 
-    private DatabaseReference mDatabase;
     private FirebaseUser firebaseUser;
     private FirebaseAuth mAuth;
     private static String mUsername;
@@ -84,9 +83,14 @@ public class LibraryActivity extends AppCompatActivity {
                     String title = value.getTitle();
                     String borrowedState = value.getBorrowed();
                     String dueDate = value.getDueDate();
+                    String userWaiting = dataSnapshot1.child("waitingList").child("0").getValue(String.class);
                     long barcode = value.getBarcode();
 
                     String coverURL = dataSnapshot1.child("cover").getValue(String.class);
+
+                    if (borrowedState.equals("False") && userWaiting.equals(mUsername)) { // The book is free and the user is waiting for it
+                        sendNotificationWaiting(title);
+                    }
 
                     fire.setAuthor(author);
                     fire.setTitle(title);
@@ -96,6 +100,7 @@ public class LibraryActivity extends AppCompatActivity {
                     fire.setBarcode(barcode);
 
                     bookClassList.add(fire);
+
                 }
 
                 bookClassListCopy = new ArrayList<>(bookClassList);
@@ -270,6 +275,57 @@ public class LibraryActivity extends AppCompatActivity {
             });
         }
 
+    }
+
+    private void sendNotificationWaiting(final String title) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Book Available");
+        builder.setMessage("The book " + title + " is available! Do you want to borrow it?");
+        builder.setIcon(getResources().getDrawable(R.drawable.agenda));
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Query query = myRef.orderByChild("title").equalTo(title);
+                query.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        dataSnapshot.child("borrowed").getRef().setValue(mUsername);
+                        dataSnapshot.child("waitingList").child("0").getRef().removeValue();
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     public void setRecyclerAdapter() {
