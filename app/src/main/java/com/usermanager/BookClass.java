@@ -16,6 +16,7 @@ public class BookClass {
     public String borrowed;
     public String dueDate;
     public long barcode;
+    public String genre;
 
     public String getTitle() {
         return title;
@@ -41,6 +42,10 @@ public class BookClass {
         return barcode;
     }
 
+    public String getGenre() {
+        return genre;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -63,6 +68,10 @@ public class BookClass {
 
     public void setBarcode(long barcode) {
         this.barcode = barcode;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
 

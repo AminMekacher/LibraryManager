@@ -19,4 +19,25 @@
         </shape>
     </item>
 
+    <item android:state_pressed="true" >
+        <shape android:shape ="rectangle" >
+
+            <stroke
+                android:height=".0dip"
+                android:width="1.0dip"
+                android:color="@color/greenCalendar" />
+
+            <solid android:color="@color/greenCalendar" />
+
+            <corners
+                android:bottomLeftRadius="12.0dip"
+                android:bottomRightRadius="12.0dip"
+                android:radius="12.0dip"
+                android:topLeftRadius="12.0dip"
+                android:topRightRadius="12.0dip" />
+        </shape>
+
+
+    </item>
+
 </selector>

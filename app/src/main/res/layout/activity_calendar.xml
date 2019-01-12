@@ -6,10 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.usermanager.CalendarActivity">
 
-    <include
-        android:id="@+id/main_toolbar"
-        layout="@layout/toolbar" />
-
     <FrameLayout
         android:id="@+id/calendar1"
         android:layout_width="match_parent"

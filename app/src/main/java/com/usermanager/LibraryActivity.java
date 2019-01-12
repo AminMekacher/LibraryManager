@@ -47,6 +47,8 @@ public class LibraryActivity extends AppCompatActivity {
     ImageView scanBarcode;
     boolean barcodeFilter;
 
+    private String selectedClub;
+
     private FirebaseUser firebaseUser;
     private FirebaseAuth mAuth;
     private static String mUsername;
@@ -67,6 +69,10 @@ public class LibraryActivity extends AppCompatActivity {
             mUsername = firebaseUser.getDisplayName();
         }
 
+        if (getIntent().hasExtra("Selected Club")) {
+            selectedClub = getIntent().getStringExtra("Selected Club");
+        }
+
         myRef.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -85,11 +91,16 @@ public class LibraryActivity extends AppCompatActivity {
                     String dueDate = value.getDueDate();
                     String userWaiting = dataSnapshot1.child("waitingList").child("0").getValue(String.class);
                     long barcode = value.getBarcode();
+                    String genre = value.getGenre();
 
                     String coverURL = dataSnapshot1.child("cover").getValue(String.class);
 
-                    if (borrowedState.equals("False") && userWaiting.equals(mUsername)) { // The book is free and the user is waiting for it
-                        sendNotificationWaiting(title);
+                    if (userWaiting != null) {
+
+                        if (borrowedState.equals("False") && userWaiting.equals(mUsername)) { // The book is free and the user is waiting for it
+                            sendNotificationWaiting(title);
+                        }
+
                     }
 
                     fire.setAuthor(author);
@@ -99,7 +110,13 @@ public class LibraryActivity extends AppCompatActivity {
                     fire.setDueDate(dueDate);
                     fire.setBarcode(barcode);
 
-                    bookClassList.add(fire);
+                    if (selectedClub != null) {
+                        if (genre.equals(selectedClub)) {
+                            bookClassList.add(fire);
+                        }
+                    } else {
+                        bookClassList.add(fire);
+                    }
 
                 }
 
@@ -197,7 +214,7 @@ public class LibraryActivity extends AppCompatActivity {
                         if (borrowedState.equals("False")) {
                             // The book is currently free: borrow it?
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                            AlertDialog.Builder builder = new AlertDialog.Builder(LibraryActivity.this);
 
                             builder.setTitle("Book available!");
                             builder.setMessage("This book is currently available. Do you want to" +
@@ -224,7 +241,7 @@ public class LibraryActivity extends AppCompatActivity {
                         } else {
                             // The book is currently borrowed by someone else: join the waiting list?
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                            AlertDialog.Builder builder = new AlertDialog.Builder(LibraryActivity.this);
 
                             builder.setTitle("Book not available");
                             builder.setMessage("This book is currently not available. Do you want to" +

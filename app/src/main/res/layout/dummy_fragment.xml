@@ -2,7 +2,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.usermanager.Dummy_Fragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,23 +62,60 @@
             android:textSize="23sp"
             android:textStyle="bold" />
 
-        <LinearLayout
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/horrorRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/horror"
+                android:drawablePadding="15dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Room 237" />
+
+            <RadioButton
+                android:id="@+id/mysteryRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/detective"
+                android:drawablePadding="15dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Baker Street" />
+
+            <RadioButton
+                android:id="@+id/scifiRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/space"
+                android:drawablePadding="15dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Betelgeuse" />
+
+            <RadioButton
+                android:id="@+id/libraryRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/bookshelves"
+                android:drawablePadding="15dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Open Library"/>
+        </RadioGroup>
+
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingBottom="20dp"
             android:paddingTop="20dp">
-
-            <Button
-                android:id="@+id/fantasyClub"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_button"
-                android:drawableLeft="@drawable/ic_dragon"
-                android:text="Khaleesi" />
 
             <Button
                 android:id="@+id/horrorClub"
@@ -90,6 +129,17 @@
                 android:text="Room 237" />
 
             <Button
+                android:id="@+id/mysteryClub"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button"
+                android:drawableLeft="@drawable/detective"
+                android:text="Baker Street" />
+
+            <Button
                 android:id="@+id/scifiClub"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -99,7 +149,7 @@
                 android:background="@drawable/rounded_button"
                 android:drawableLeft="@drawable/space"
                 android:text="Betelgeuse" />
-        </LinearLayout>
+        </LinearLayout> -->
 
         <View
             android:layout_width="match_parent"

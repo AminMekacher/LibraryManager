@@ -84,23 +84,26 @@ public class CalendarActivity extends AppCompatActivity {
 
                 SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
                 String dateSelected = dateFormat1.format(date);
+                index = 0;
 
                 if (dueDate.contains(date)) {
                     for (String dateString : dueDateString) {
                         try {
                             Date testDate = dateFormat.parse(dateString);
                             if (testDate.equals(date)) {
-                                index = dueDateString.indexOf(dateString);
+                                //index = dueDateString.indexOf(dateString);
                                 titleDate.add(bookTitleList.get(index));
                             }
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
 
+                        index ++;
+
                     }
 
                     if (titleDate != null) {
-                        bookListView = android.text.TextUtils.join(",", titleDate);
+                        bookListView = android.text.TextUtils.join(", ", titleDate);
                         dueBookText.setText("Books due for the " + dateSelected + " : \n" + bookListView);
                         dueBookText.setVisibility(View.VISIBLE);
                     }
