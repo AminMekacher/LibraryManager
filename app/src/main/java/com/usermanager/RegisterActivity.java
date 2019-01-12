@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.usermanager_demo.R;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -25,6 +27,9 @@ public class RegisterActivity extends AppCompatActivity {
     private Button registerButton;
 
     private FirebaseAuth firebaseAuth;
+
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference myRef;
 
     // Boolean to check if all entries in the form have been filled
     private Boolean registerFormStatus;
@@ -42,6 +47,9 @@ public class RegisterActivity extends AppCompatActivity {
         pictureText = findViewById(R.id.profilePicture);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = firebaseDatabase.getReference().child("Users");
 
         registerButton = findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -78,8 +86,9 @@ public class RegisterActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Log.e("Picture", "Everythign went well :)");
-                                            completeRegistration();
+                                            Log.e("Picture", "Everything went well :)");
+                                            addUserToDatabase();
+                                            //completeRegistration();
                                         }
                                     }
                                 });
@@ -91,6 +100,15 @@ public class RegisterActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    private void addUserToDatabase() {
+
+        myRef.child(usernameHolder).child("username").setValue(usernameHolder);
+        myRef.child(usernameHolder).child("picture").setValue(pictureHolder);
+
+        completeRegistration();
+
     }
 
     private void completeRegistration() {
