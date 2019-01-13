@@ -20,7 +20,8 @@
             android:layout_marginTop="10dp"
             android:text="Login"
             android:textSize="28sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <ImageView
             android:id="@+id/profileImage"
@@ -95,7 +96,8 @@
             android:textStyle="bold"
             android:layout_marginTop="15dp"
             android:clickable="true"
-            android:onClick="registerCallback" />
+            android:onClick="registerCallback"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/passwordForgotten"
@@ -107,7 +109,8 @@
             android:textStyle="bold"
             android:layout_marginTop="8dp"
             android:clickable="true"
-            android:onClick="passwordRecover"/>
+            android:onClick="passwordRecover"
+            android:textColor="@color/black"/>
 
 
     </LinearLayout>

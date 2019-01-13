@@ -30,7 +30,8 @@
         android:text="Calendar View"
         android:textStyle="bold"
         android:layout_below="@id/calendarImage"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"/>
 
     <View
         android:id="@+id/view2"

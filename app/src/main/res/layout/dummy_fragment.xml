@@ -20,7 +20,8 @@
             android:gravity="center"
             android:text="Welcome to our library!"
             android:textSize="23sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <ImageView
             android:layout_width="150dp"
@@ -40,7 +41,8 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:textSize="23sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:textColor="@color/black"/>
 
         <View
             android:layout_width="match_parent"
@@ -60,7 +62,8 @@
             android:gravity="center"
             android:text="Library Clubs"
             android:textSize="23sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -109,47 +112,6 @@
                 android:paddingTop="10dp"
                 android:text="Open Library"/>
         </RadioGroup>
-
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp">
-
-            <Button
-                android:id="@+id/horrorClub"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_button"
-                android:drawableLeft="@drawable/horror"
-                android:text="Room 237" />
-
-            <Button
-                android:id="@+id/mysteryClub"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_button"
-                android:drawableLeft="@drawable/detective"
-                android:text="Baker Street" />
-
-            <Button
-                android:id="@+id/scifiClub"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_button"
-                android:drawableLeft="@drawable/space"
-                android:text="Betelgeuse" />
-        </LinearLayout> -->
 
         <View
             android:layout_width="match_parent"

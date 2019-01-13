@@ -86,6 +86,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHode
                 holder.borrowButton.setText("Join Waiting List");
                 holder.borrowButton.setTextColor(holder.itemView.getResources().getColor(R.color.redWarning));
             }
+        } else {
+            holder.borrowButton.setText("Borrow Book");
+            holder.borrowButton.setTextColor(holder.itemView.getResources().getColor(R.color.greenText));
         }
 
         holder.detailsButton.setOnClickListener(new View.OnClickListener() {

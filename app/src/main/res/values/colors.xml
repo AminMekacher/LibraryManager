@@ -7,4 +7,5 @@
     <color name="redWarning">#660000</color>
     <color name="greenCalendar">#98FB98</color>
     <color name="greenText">#3CB371</color>
+    <color name="black">#000000</color>
 </resources>

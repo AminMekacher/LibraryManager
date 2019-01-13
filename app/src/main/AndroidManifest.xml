@@ -38,6 +38,7 @@
             </intent-filter>
         </service>
 
+        <activity android:name="com.usermanager.LottieActivity"></activity>
     </application>
 
 </manifest>

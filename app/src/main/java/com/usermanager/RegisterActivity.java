@@ -24,7 +24,7 @@ import com.usermanager_demo.R;
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText emailText, passwordText, usernameText, pictureText;
-    private Button registerButton;
+    private Button registerButton, cancelButton;
 
     private FirebaseAuth firebaseAuth;
 
@@ -50,6 +50,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         myRef = firebaseDatabase.getReference().child("Users");
+
+        cancelButton = findViewById(R.id.cancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         registerButton = findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +96,6 @@ public class RegisterActivity extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             Log.e("Picture", "Everything went well :)");
                                             addUserToDatabase();
-                                            //completeRegistration();
                                         }
                                     }
                                 });
@@ -112,7 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void completeRegistration() {
-        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+        Intent intent = new Intent(RegisterActivity.this, LottieActivity.class);
         startActivity(intent);
     }
 

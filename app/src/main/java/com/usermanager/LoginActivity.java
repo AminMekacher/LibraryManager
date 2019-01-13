@@ -21,7 +21,7 @@ import com.usermanager_demo.R;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailText, passwordText;
-    private Button loginButton;
+    private Button loginButton, cancelButton;
     private String emailHolder, passwordHolder;
     private TextView registerText, forgottenPassword;
 
@@ -36,6 +36,14 @@ public class LoginActivity extends AppCompatActivity {
 
         emailText = findViewById(R.id.email);
         passwordText = findViewById(R.id.password);
+
+        cancelButton = findViewById(R.id.cancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
