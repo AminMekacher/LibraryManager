@@ -49,6 +49,8 @@ public class LibraryActivity extends AppCompatActivity {
 
     private String selectedClub;
 
+    private String dueDate;
+
     private FirebaseUser firebaseUser;
     private FirebaseAuth mAuth;
     private static String mUsername;
@@ -73,12 +75,17 @@ public class LibraryActivity extends AppCompatActivity {
             selectedClub = getIntent().getStringExtra("Selected Club");
         }
 
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_MONTH, 30);
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+        dueDate = sdf1.format(c.getTime());
+
         myRef.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.e("Value", "onDataChange called");
-                bookClassList = new ArrayList<BookClass>();
+                bookClassList = new ArrayList<>();
 
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
@@ -170,18 +177,12 @@ public class LibraryActivity extends AppCompatActivity {
             bookClassList = new ArrayList<>(bookClassListCopy);
             setRecyclerAdapter();
             barcodeFilter = true;
-            //recyclerAdapter.filter(barcodeSearch, barcodeFilter);
 
             Query query = myRef.orderByChild("barcode").equalTo(Long.parseLong(barcodeSearch));
             query.addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull final DataSnapshot dataSnapshot, @Nullable String s) {
                     String borrowedState = dataSnapshot.child("borrowed").getValue(String.class);
-
-                    Calendar c = Calendar.getInstance();
-                    c.add(Calendar.DAY_OF_MONTH, 30);
-                    SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
-                    final String dueDate = sdf1.format(c.getTime());
 
                     if (borrowedState.equals(mUsername)) {
                         // The user is already borrowing the book: give it back?
@@ -308,7 +309,20 @@ public class LibraryActivity extends AppCompatActivity {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         dataSnapshot.child("borrowed").getRef().setValue(mUsername);
-                        dataSnapshot.child("waitingList").child("0").getRef().removeValue();
+                        dataSnapshot.child("dueDate").getRef().setValue(dueDate);
+                        //dataSnapshot.child("waitingList").child("0").getRef().removeValue();
+
+                        // We need to shift all the users in the waiting list
+                        int numberChildren = (int) dataSnapshot.child("waitingList").getChildrenCount();
+
+                        for (int i = 0; i < numberChildren; i ++) {
+                            String tempUser = dataSnapshot.child("waitingList").child(Integer.toString(i + 1)).getValue(String.class);
+                            dataSnapshot.child("waitingList").child(Integer.toString(i)).getRef().setValue(tempUser);
+                        }
+
+                        dataSnapshot.child("waitingList").child(Integer.toString(numberChildren)).getRef().removeValue();
+
+
                     }
 
                     @Override

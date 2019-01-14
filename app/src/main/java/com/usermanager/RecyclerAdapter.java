@@ -303,8 +303,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHode
 
     public void filter (String queryText, boolean barcodeFilter) {
 
-        int i = bookListCopy.size();
-
         bookList.clear();
 
         if (queryText.isEmpty()) {
